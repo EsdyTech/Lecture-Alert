@@ -1,6 +1,6 @@
 <?php
     include('includes/dbconnection.php');
-    require_once ('php-mailer/PHPMailerAutoload.php');
+    //require_once ('php-mailer/PHPMailerAutoload.php');
     //C:\xampp\php\php.exe -f C:\xampp\htdocs\websites\Lecture_Alert\cronjob.php
 
     date_default_timezone_set('Africa/Lagos');
@@ -33,37 +33,15 @@
              //Mail code goes here!
             //The Email Configuraton Class
 
-            $subject = 'LECTURE ALERT  -  '.$courseCode.'     '.$courseName.'';
+            $subject = 'LECTURE ALERT NOTIFICATION';
             $body = 'Dear '.$fullName.', <br><br>';
             $body .= 'This is to notify you that you will be having a class from '.$classTime.'. Please kindly prepare ahead of time. <br><br>';
             $body .= 'Warm Regards <br><br><br>';
-            $body .= 'Lecturer Alert System';
+            $body .= 'Lecture Alert System';
             
-            $mail = new PHPMailer();
-            $mail->isSMTP();
-            $mail->SMTPAuth = true;
-            $mail->SMTPSecure='ssl';
-            $mail->Host='smtp.googlemail.com';
-            $mail->Port = '465';
-            $mail->isHTML(true);
-            $mail->Username ='sawdykdevtest@gmail.com';
-            $mail->Password ='sawdykdevtest@2020';
-            $mail->SetFrom('no-reply@howcode.org');
-            $mail->Subject = $subject;
-            $mail->WordWrap = 50;
-            $mail->Body = $body;
-            $mail->AddAddress($emailAddress); //delivery email Address
-            //$mail->AddAddress('michealakinkuotu73@gmail.com');
-            // $mail->AddAddress('michealakinkuotu73@gmail.com');
-            
-            if($mail->Send()) 
-            {
-                echo "Mail Sent Successfully!";
-            } 
-            else 
-            {
-                echo "Mail Failed to Send!";
-            }
+            //SendChamp Configuration goes here
+            include('sendChamp.php');
+            sendEmail($emailAddress, $body, $subject);
         }
         else{
             echo "No Class Yet!";
